@@ -1,6 +1,5 @@
 import sys
 from collections import namedtuple
-import shutil
 
 
 def main() -> None:
@@ -16,8 +15,11 @@ def main() -> None:
 
     elif args.command == "copy":
         """ファイルコピー"""
-        shutil.copyfile(args.input_path, args.output_path)
-        return
+        with open(args.input_path, "r", encoding="utf-8") as rf:
+            f_string = rf.read()
+
+        with open(args.output_path, "w", encoding="utf-8") as wf:
+            wf.write(f_string)
 
     elif args.command == "duplicate-contents":
         """Inputファイルの内容をN回複製して追記"""
