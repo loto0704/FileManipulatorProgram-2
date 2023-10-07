@@ -4,40 +4,42 @@ import shutil
 
 
 def main() -> None:
-    if ARGS.command == "reverse":
+    args = get_argv()  # 引数取得
+
+    if args.command == "reverse":
         """逆順にしてエクスポート"""
-        with open(ARGS.input_path, "r", encoding="utf-8") as rf:
+        with open(args.input_path, "r", encoding="utf-8") as rf:
             f_string = rf.read()
 
-        with open(ARGS.output_path, "w", encoding="utf-8") as wf:
+        with open(args.output_path, "w", encoding="utf-8") as wf:
             wf.write(f_string[::-1])
 
-    elif ARGS.command == "copy":
+    elif args.command == "copy":
         """ファイルコピー"""
-        shutil.copyfile(ARGS.input_path, ARGS.output_path)
+        shutil.copyfile(args.input_path, args.output_path)
         return
 
-    elif ARGS.command == "duplicate-contents":
+    elif args.command == "duplicate-contents":
         """Inputファイルの内容をN回複製して追記"""
-        with open(ARGS.input_path, "r", encoding="utf-8") as rf:
+        with open(args.input_path, "r", encoding="utf-8") as rf:
             f_string = rf.read()
 
         strs = []
-        for i in range(ARGS.number):
+        for i in range(args.number):
             strs.append(f_string)
 
-        with open(ARGS.input_path, "a", encoding="utf-8") as wf:
+        with open(args.input_path, "a", encoding="utf-8") as wf:
             wf.write("\n")
             wf.write("\n".join(strs))
 
-    elif ARGS.command == "replace-string":
+    elif args.command == "replace-string":
         """特定文字列を置換して上書き"""
-        with open(ARGS.input_path, "r", encoding="utf-8") as rf:
+        with open(args.input_path, "r", encoding="utf-8") as rf:
             f_string = rf.read()
 
-        w_string = f_string.replace(ARGS.old_str, ARGS.new_str)
+        w_string = f_string.replace(args.old_str, args.new_str)
 
-        with open(ARGS.input_path, "w", encoding="utf-8") as wf:
+        with open(args.input_path, "w", encoding="utf-8") as wf:
             wf.write(w_string)
 
 
@@ -68,5 +70,4 @@ if __name__ == '__main__':
         print("引数が指定されてません。引数を指定してから再度実行してください。")
         sys.exit()
 
-    ARGS = get_argv()  # 引数取得
     main()
