@@ -2,30 +2,28 @@ import sys
 from collections import namedtuple
 
 
+def read_file(file_path):
+    with open(file_path, "r", encoding="utf-8") as f:
+        f_string = f.read()
+    return f_string
+
+
 def main() -> None:
     args = get_argv()  # 引数取得
+    f_string = read_file(args.input_path)
 
     if args.command == "reverse":
         """逆順にしてエクスポート"""
-        with open(args.input_path, "r", encoding="utf-8") as rf:
-            f_string = rf.read()
-
         with open(args.output_path, "w", encoding="utf-8") as wf:
             wf.write(f_string[::-1])
 
     elif args.command == "copy":
         """ファイルコピー"""
-        with open(args.input_path, "r", encoding="utf-8") as rf:
-            f_string = rf.read()
-
         with open(args.output_path, "w", encoding="utf-8") as wf:
             wf.write(f_string)
 
     elif args.command == "duplicate-contents":
         """Inputファイルの内容をN回複製して追記"""
-        with open(args.input_path, "r", encoding="utf-8") as rf:
-            f_string = rf.read()
-
         strs = []
         for i in range(args.number):
             strs.append(f_string)
@@ -36,9 +34,6 @@ def main() -> None:
 
     elif args.command == "replace-string":
         """特定文字列を置換して上書き"""
-        with open(args.input_path, "r", encoding="utf-8") as rf:
-            f_string = rf.read()
-
         w_string = f_string.replace(args.old_str, args.new_str)
 
         with open(args.input_path, "w", encoding="utf-8") as wf:
